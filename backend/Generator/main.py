@@ -20,6 +20,7 @@ import re
 from typing import Any, List, Mapping, Tuple
 import re
 import os
+import uuid
 import fitz 
 import mammoth
 
@@ -350,6 +351,8 @@ class GoogleDocsService:
     
 
 class FileProcessor:
+    ALLOWED_EXTENSIONS = {'.txt', '.pdf', '.docx'}
+
     def __init__(self, upload_folder='uploads/'):
         self.upload_folder = upload_folder
         if not os.path.exists(self.upload_folder):
@@ -368,19 +371,35 @@ class FileProcessor:
             return result.value
 
     def process_file(self, file):
-        file_path = os.path.join(self.upload_folder, file.filename)
-        file.save(file_path)
+        if not file or not getattr(file, 'filename', None):
+            return ""
+
+        filename = file.filename
+        _, ext = os.path.splitext(filename)
+        ext = ext.lower()
+
+        if ext not in self.ALLOWED_EXTENSIONS:
+            return ""
+
+        # Generate a random UUID-based filename to avoid path traversal and collisions
+        secure_name = f"{uuid.uuid4().hex}{ext}"
+        file_path = os.path.join(self.upload_folder, secure_name)
+
         content = ""
+        try:
+            file.save(file_path)
 
-        if file.filename.endswith('.txt'):
-            with open(file_path, 'r') as f:
-                content = f.read()
-        elif file.filename.endswith('.pdf'):
-            content = self.extract_text_from_pdf(file_path)
-        elif file.filename.endswith('.docx'):
-            content = self.extract_text_from_docx(file_path)
+            if ext == '.txt':
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+            elif ext == '.pdf':
+                content = self.extract_text_from_pdf(file_path)
+            elif ext == '.docx':
+                content = self.extract_text_from_docx(file_path)
+        finally:
+            if os.path.exists(file_path):
+                os.remove(file_path)
 
-        os.remove(file_path)
         return content
 
 class QuestionGenerator:
