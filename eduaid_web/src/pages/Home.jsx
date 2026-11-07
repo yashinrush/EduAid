@@ -99,26 +99,28 @@ const Home = () => {
           </div>
 
           {/* GitHub Stars */}
-          <a
-            href="https://github.com/AOSSIE-Org/EduAid"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block mt-10"
-          >
-            <div className="bg-[#45454599] hover:bg-[#5a5a5a99] transition-colors duration-300 w-fit mx-auto px-4 py-3 rounded-xl flex gap-4 items-center">
-              <img src={gitStar} width={28} height={12} alt="GitHub Star" />
-              <div className="text-white font-semibold text-2xl flex items-center gap-4">
-                {stars !== null ? (
-                  <>
-                    {stars}
-                    <FaGithub size={32} />
-                  </>
-                ) : (
-                  <span>{error}</span>
-                )}
+          <div className="flex justify-center mt-10">
+            <a
+              href="https://github.com/AOSSIE-Org/EduAid"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center"
+            >
+              <div className="bg-[#45454599] hover:bg-[#5a5a5a99] transition-colors duration-300 w-fit px-4 py-3 rounded-xl flex gap-4 items-center">
+                <img src={gitStar} width={28} height={12} alt="GitHub Star" />
+                <div className="text-white font-semibold text-2xl flex items-center gap-4">
+                  {stars !== null ? (
+                    <>
+                      {stars}
+                      <FaGithub size={32} />
+                    </>
+                  ) : (
+                    <span>{error}</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
     </div>

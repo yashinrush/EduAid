@@ -107,26 +107,28 @@ function Popup() {
               </a>
             </div>
           </div>
-          <a
-            href="https://github.com/AOSSIE-Org/EduAid"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group"
-          >
-            <div className="bg-[#45454599] mt-5 w-fit mx-auto px-2 py-2 rounded-xl flex gap-2 items-center group-hover:bg-[#5a5a5a99] transition-colors duration-300">
-              <img src={gitStar} className="" width={22} height={6} alt="" />
-              <div className="text-white font-semibold">
-                {stars !== null ? (
-                  <span className="flex text-xl">
-                    {stars}
-                    <FaGithub size={30} className="ml-4" />
-                  </span>
-                ) : (
-                  <span>{error}</span>
-                )}
+          <div className="flex justify-center mt-5">
+            <a
+              href="https://github.com/AOSSIE-Org/EduAid"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center"
+            >
+              <div className="bg-[#45454599] w-fit px-2 py-2 rounded-xl flex gap-2 items-center group-hover:bg-[#5a5a5a99] transition-colors duration-300">
+                <img src={gitStar} className="" width={22} height={6} alt="" />
+                <div className="text-white font-semibold">
+                  {stars !== null ? (
+                    <span className="flex text-xl">
+                      {stars}
+                      <FaGithub size={30} className="ml-4" />
+                    </span>
+                  ) : (
+                    <span>{error}</span>
+                  )}
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
     </div>
